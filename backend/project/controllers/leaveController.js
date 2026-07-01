@@ -1,10 +1,10 @@
 const asyncHandler = require("express-async-handler");
-const leaveModel  = reqiure("../models/leaveModel.js");
+const leaveModel  = require("../models/leaveModel");
 
 const setleave = asyncHandler(async(req,res)=>{
-    const {addOnLeave,payedleave,sickLeave} = req.body;
+    const {addOnLeave,payedLeave,sickLeave} = req.body;
     
-    if(addOnLeave<= 0 ||payedleave <= 0||sickLeave <= 0){
+    if(addOnLeave <= 0 ||payedLeave <= 0||sickLeave <= 0){
         return res.status(400).json({
             msg:"enter the coorect leave days"
         });
@@ -13,8 +13,12 @@ const setleave = asyncHandler(async(req,res)=>{
     const setLeaveNew = await leaveModel.create({
         userId : req.user.id,
         addOnLeave,
-        payedleave,
+        payedLeave,
         sickLeave,
+    });
+    return res.status(201).json({
+    msg: "Leave created successfully",
+    data: setLeaveNew
     });
 });
 

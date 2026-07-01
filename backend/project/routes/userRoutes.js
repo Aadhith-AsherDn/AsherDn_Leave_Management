@@ -3,7 +3,7 @@ const routes = express.Router();
 
 const validateToken = require("../middlewares/athuMiddle");
 
-const {register,userLogin} = require("../controllers/userController");
+const {register,userLogin} = require("../controllers/userControlller");
 
 routes.post("/register",register);
 

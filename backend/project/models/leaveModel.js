@@ -1,24 +1,24 @@
 const mongoose = require('mongoose');
 
 const leaveSchema = new mongoose.Schema({
-    userEmail:{
+    userId:{
         type:mongoose.Schema.Types.ObjectId,
     ref:"login",
-    require:true
+    required:true
     },
     addOnLeave:{
         type:Number,
-        require:true,
+        required:true,
         default: 0
     },
     payedLeave:{
         type:Number,
-        require:true,
+        required:true,
         default: 0
     },
     sickLeave:{
         type:Number,
-        require:true,
+        required:true,
         default: 0
     }
 },{

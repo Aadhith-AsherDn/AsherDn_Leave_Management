@@ -5,8 +5,8 @@ const roleBaseAthu = require("../middlewares/roleBasedAthu");
 const {setleave,updateLeave} = require("../controllers/leaveController");
 
 
-leaveRoutes.post("/",validateToken,roleBaseAthu('manager'),setleave);
+leaveRoutes.post("/",validateToken,setleave);
 
-leaveRoutes.put("/",validateToken,roleBaseAthu('manager'),updateLeave);
+leaveRoutes.put("/",validateToken,updateLeave);
 
 module.exports = leaveRoutes;
