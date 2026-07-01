@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const attenduserSchema = new mongoose.Schema(
     {
         userId:{
              type:Number,
@@ -31,9 +31,8 @@ const userSchema = new mongoose.Schema(
         role:{
             type:String,
             require:true,
-            default:"users",
              enum:{
-                values:['admin','users','intern','super admin'],
+                values:['admin','users','intern','manager'],
                 message: '{VALUE} is not a valid type.'
             }
         }
@@ -42,5 +41,5 @@ const userSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model("login",userSchema);
+module.exports = mongoose.model("login",attenduserSchema);
 

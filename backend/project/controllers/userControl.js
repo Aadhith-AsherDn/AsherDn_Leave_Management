@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const register = asyncHandler(async (req, res) => {
-    const { userName, userEmail, userPassword } = req.body;
-    if (!userName || !userEmail || !userPassword) {
+    const { userName, userEmail, userPassword,role} = req.body;
+    if (!userName || !userEmail || !userPassword || !role) {
         return res.status(400).json({
             msg: "Fill all details"
         });
@@ -64,11 +64,11 @@ const register = asyncHandler(async (req, res) => {
         userName,
         userEmail,
         userPassword: hashedPassword,
+        role
     });
 
     return res.status(201).json({
-        msg: "Registered successfully",
-        userId: nextUserId,
+        msg: "Registered successfully"        
     });
 });
 
