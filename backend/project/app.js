@@ -10,6 +10,7 @@ connectDB();
 
 app.use("/users",require("./routes/userRoutes"));
 
+app.use("/leave",require("./routes/leaveRoutes"));
 
 app.listen(port, () => {
   console.log(`server running ${port}`);

@@ -1,12 +1,13 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 
+
 const validateToken = asyncHandler(async (req, res, next) => {
 
     let token;
 
     const authHeader =
-        req.headers.authorization || req.headers.Authorization;
+        req.headers.authorization || req.headers.Authorization ;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).json({
@@ -26,11 +27,8 @@ const validateToken = asyncHandler(async (req, res, next) => {
                     message: "Token invalid"
                 });
             }
-
             req.user = decoded.user;
-
             next();
-
         }
     );
 
