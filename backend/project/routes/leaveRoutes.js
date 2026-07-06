@@ -7,6 +7,7 @@ const {setleave,updateLeave} = require("../controllers/leaveController");
 
 leaveRoutes.post("/",validateToken,setleave);
 
-leaveRoutes.put("/",validateToken,updateLeave);
+
+leaveRoutes.put("/",validateToken,roleBaseAthu('manager'),updateLeave);
 
 module.exports = leaveRoutes;

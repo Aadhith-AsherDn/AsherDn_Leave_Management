@@ -4,17 +4,17 @@ const attenduserSchema = new mongoose.Schema(
     {
         userId:{
              type:Number,
-            require:true
+            required:true
 
         },
         userName:{
             type:String,
-            require:true
+            required:true
         },
 
         userEmail:{
             type:String,
-            require:true,
+            required:true,
             unique: true,
             lowercase: true,
             trim: true,
@@ -26,11 +26,19 @@ const attenduserSchema = new mongoose.Schema(
         
         userPassword:{
             type:String,
-            require:true
+            required:true
+        },
+        resetPasswordToken: {
+            type: String,
+            default:null
+        },
+        resetPasswordExpire: {
+            type: Date,
+            default:null
         },
         role:{
             type:String,
-            require:true,
+            required:true,
              enum:{
                 values:['intern','fullTime','admin','manager'],
                 message: '{VALUE} is not a valid type.'

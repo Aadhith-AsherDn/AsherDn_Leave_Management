@@ -2,16 +2,24 @@ const asyncHandler = require("express-async-handler");
 const leaveModel  = require("../models/leaveModel");
 
 const setleave = asyncHandler(async(req,res)=>{
-    const {addOnLeave,payedLeave,sickLeave} = req.body;
+    const {userEmail,addOnLeave,payedLeave,sickLeave} = req.body;
     
-    if(addOnLeave <= 0 ||payedLeave <= 0||sickLeave <= 0){
+    if(addOnLeave <= 0 ||payedLeave <= 0||sickLeave <= 0 || !userEmail){
         return res.status(400).json({
             msg:"enter the coorect leave days"
         });
     }
 
+    const existing = await leaveModel.findOne({ userEmail });
+
+        if (existing) {
+        return res.status(400).json({
+            msg: "Leave already exists for this user"
+        });
+    }
+
     const setLeaveNew = await leaveModel.create({
-        userId : req.user.id,
+        userEmail,
         addOnLeave,
         payedLeave,
         sickLeave,
@@ -22,30 +30,32 @@ const setleave = asyncHandler(async(req,res)=>{
     });
 });
 
-const updateLeave = asyncHandler(async(req,res)=>{
-    const olduser = await leaveModel.findOne({
-            userId: req.user.id
-        });
+const updateLeave = asyncHandler(async (req, res) => {
 
-    if(!olduser){
-        return res.status(404).json({
-            msg:"user not found"
-        });
-    }
+    const { userEmail, addOnLeave, payedLeave, sickLeave } = req.body;
 
-    const updatedleave = await leaveModel.findOneAndUpdate(
+    const updated = await leaveModel.findOneAndUpdate(
+        { userEmail },
         {
-            userId: req.user.id
+            addOnLeave,
+            payedLeave,
+            sickLeave 
         },
-        req.body,
         {
             new: true,
             runValidators: true
         }
     );
 
+    if (!updated) {
+        return res.status(404).json({
+            msg: "User not found"
+        });
+    }
+
     return res.status(200).json({
-        msg: "Update successfully"
+        msg: "Leave updated successfully",
+        data: updated
     });
 });
 

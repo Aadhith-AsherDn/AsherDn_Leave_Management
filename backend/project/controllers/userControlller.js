@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler");
 const login = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const nodemailer=require("nodemailer");
+const crypto = require("crypto");
 
 const register = asyncHandler(async (req, res) => {
     const { userName, userEmail, userPassword,role} = req.body;
@@ -115,5 +117,66 @@ const userLogin = asyncHandler(async(req,res)=>{
      return res.status(200).json({accessToken});
 });
 
+const forgotPassword = asyncHandler(async (req, res) => {
 
-module.exports = {register,userLogin};
+    const { userEmail } = req.body;
+
+    if (!userEmail) {
+        return res.status(400).json({
+            msg: "Email is required"
+        });
+    }
+
+    const user = await login.findOne({ userEmail });
+
+    if (!user) {
+        return res.status(404).json({
+            msg: "User not found"
+        });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    user.resetPasswordToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
+
+    user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+    await user.save();
+
+    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+
+    await transporter.sendMail({
+        to: user.userEmail,
+        subject: "Reset Password",
+        html: `
+            <h2>Password Reset</h2>
+            <p>Click the link below to reset your password.</p>
+            <a href="${resetUrl}">Reset Password</a>
+        `
+    });
+
+    return res.status(200).json({
+        msg: "Password reset email sent"
+    });
+});
+    console.log(process.env.EMAIL);
+    console.log(process.env.EMAIL_PASSWORD); 
+const transporter=nodemailer.createTransport({
+
+    service:"gmail",
+       
+
+    auth:{
+        user:process.env.EMAIL,
+        pass:process.env.EMAIL_PASSWORD
+    }
+    
+
+});
+
+
+
+module.exports = {register,userLogin, forgotPassword};

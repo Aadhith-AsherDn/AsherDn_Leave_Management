@@ -1,28 +1,25 @@
 const mongoose = require('mongoose');
 
 const leaveSchema = new mongoose.Schema({
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-    ref:"login",
-    required:true
+    userEmail: {
+        type: String,
+        required: true,
+        unique: true
     },
-    addOnLeave:{
-        type:Number,
-        required:true,
+    addOnLeave: {
+        type: Number,
         default: 0
     },
-    payedLeave:{
-        type:Number,
-        required:true,
+    payedLeave: {
+        type: Number,
         default: 0
     },
-    sickLeave:{
-        type:Number,
-        required:true,
+    sickLeave: {
+        type: Number,
         default: 0
     }
-},{
-    timestamps:true
-})
+}, {
+    timestamps: true
+});
 
 module.exports = mongoose.model("leave",leaveSchema);
