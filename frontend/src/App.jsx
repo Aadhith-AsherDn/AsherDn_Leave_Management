@@ -1,14 +1,8 @@
-import Calendar from "./components/calendar"
-import sidebars from "./components/sidebar"
+import AppRoutes from "./routes/appRoutes";
 
-function App() {
-  return (
-    <div className="flex items-center justify-center h-screen bg-slate-900">
-      <sidebars />
-      <Calendar />
-      
-    </div>
-  )
-}
+function App(){
 
-export default App
+  return <AppRoutes />
+};
+
+export default App;
