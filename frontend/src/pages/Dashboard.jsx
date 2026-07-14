@@ -1,4 +1,7 @@
 import DashboardCard from "../components/DashboardCard";
+import Leavecard from "../components/leaveCard";
+import LeaveupdateStatus from "../components/LeavePanel";
+import ApplicationStatus from "../components/leaveRequest";
 
 const Dashboard = () => {
   return (
@@ -33,8 +36,14 @@ const Dashboard = () => {
         />
 
       </div>
-
+      <div className="grid grid-cols-4 gap-4">
+      <Leavecard />
+      <ApplicationStatus />
+      
+      </div>
+      
     </div>
+    
   );
 };
 

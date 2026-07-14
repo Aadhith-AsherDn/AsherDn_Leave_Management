@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  approveLeave,
-  rejectLeave,
-  getAllLeaves,
-} from "../services/leaveService";
 
-const LeaveUpdateStatus = () => {
+const AttendanceCard = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -70,20 +65,17 @@ const LeaveUpdateStatus = () => {
   return (
     <div className="mt-5 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">
-        Leave Requests
+        Attendance
       </h2>
 
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-200 rounded-lg">
           <thead className="bg-slate-800 text-white">
             <tr>
-              <th className="px-4 py-3 text-left">Employee Email</th>
-              <th className="px-4 py-3 text-left">Leave Type</th>
-              <th className="px-4 py-3 text-left">From Date</th>
-              <th className="px-4 py-3 text-left">To Date</th>
-              <th className="px-4 py-3 text-left">Reason</th>
-              <th className="px-4 py-3 text-center">Status</th>
-              <th className="px-4 py-3 text-center">Action</th>
+              <th className="px-4 py-3 text-left">Employee Name</th>
+              <th className="px-4 py-3 text-left">Punch In</th>
+              <th className="px-4 py-3 text-left">Punch Out</th>
+              <th className="px-4 py-3 text-left">Total time</th>
             </tr>
           </thead>
 
@@ -174,4 +166,4 @@ const LeaveUpdateStatus = () => {
   );
 };
 
-export default LeaveUpdateStatus;
+export default AttendanceCard;

@@ -40,7 +40,7 @@ const attenduserSchema = new mongoose.Schema(
             type:String,
             required:true,
              enum:{
-                values:['intern','fullTime','admin','manager'],
+                values:['Intern','Employee','Super Admin','Manager'],
                 message: '{VALUE} is not a valid type.'
             }
         }

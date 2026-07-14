@@ -17,20 +17,26 @@ const validateToken = asyncHandler(async (req, res, next) => {
 
     token = authHeader.split(" ")[1];
 
-    jwt.verify(
-        token,
-        process.env.ACCESS_TOKEN_SECRET,
-        (err, decoded) => {
+    try {
 
-            if (err) {
-                return res.status(401).json({
-                    message: "Token invalid"
-                });
-            }
-            req.user = decoded.user;
-            next();
-        }
+    const decoded = jwt.verify(
+        token,
+        process.env.ACCESS_TOKEN_SECRET
     );
+
+    req.user = decoded.user;
+
+    next();
+
+    }
+    catch(err){
+
+        return res.status(401).json({
+            success:false,
+            msg:"Invalid Token"
+        });
+
+}
 
 });
 

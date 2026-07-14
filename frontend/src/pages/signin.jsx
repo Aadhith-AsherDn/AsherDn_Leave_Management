@@ -15,7 +15,7 @@ function Register(){
         e.preventDefault();
 
         try{
-            const response = await SigninUser({
+            const response = await userSign({
                 userName,
                 userEmail,
                 userPassword,
@@ -110,9 +110,10 @@ function Register(){
             className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500"
           >
             <option value="">Select Role</option>
-            <option value="employee">Employee</option>
-            <option value="manager">Manager</option>
-            <option value="admin">Admin</option>
+            <option value="Intern">Intern</option>
+            <option value="Employee">Employee</option>
+            <option value="Manager">Manager</option>
+            <option value="Super Admin">Super Admin</option>
           </select>
         </div>
 

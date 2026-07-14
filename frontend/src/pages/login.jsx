@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await loginUser({
+      const response = await userLogin({
         userEmail,
         userPassword,
       });
@@ -25,7 +25,7 @@ function Login() {
         response.accessToken
       );
 
-      navigate("/dashboard");
+      navigate("/");
 
       } catch (error) {
     console.log("Backend Error:");
@@ -104,6 +104,15 @@ return (
         </button>
 
       </form>
+      <div className="mt-6 text-center text-sm text-gray-600">
+        New User
+        <Link
+          to="/sigin"
+          className="ml-2 text-blue-600 hover:underline font-medium"
+        >
+          Register
+        </Link>
+      </div>
 
       <div className="mt-8 text-center text-sm text-gray-500">
         © 2026 AsherDn. All rights reserved.

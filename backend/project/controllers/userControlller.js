@@ -84,6 +84,7 @@ const userLogin = asyncHandler(async(req,res)=>{
         }
 
     const oldUser = await login.findOne({userEmail});
+    
     if (!oldUser) {
     return res.status(400).json({
         msg: "Email or password does not match"
@@ -100,14 +101,16 @@ const userLogin = asyncHandler(async(req,res)=>{
             msg: "Email or password does not match"
         });
     }
-        
+    
     const accessToken =jwt.sign(
             {
                 user: {
-                    id: oldUser._id,
-                    name: oldUser.userName,
-                    email: oldUser.userEmail
+                    userId: oldUser.userId,
+                    userName: oldUser.userName,
+                    userEmail: oldUser.userEmail,
+                    role : oldUser.role
                 }
+               
             },
             process.env.ACCESS_TOKEN_SECRET,
             {
@@ -177,6 +180,66 @@ const transporter=nodemailer.createTransport({
 
 });
 
+const updateUser = asyncHandler(async (req, res) => {
+
+    const oldUser = await login.findOne({
+        userEmail: String(req.params.userEmail),
+        userId: req.user.id
+    });
+
+    if (!oldUser) {
+        return res.status(404).json({
+            msg: "User not found"
+        });
+    }
+
+    const updatedUser = await login.findOneAndUpdate(
+        {
+            userEmail: String(req.params.userEmail),
+            userId: req.user.id
+        },
+        req.body,
+        {
+            new: true,
+            runValidators: true
+        }
+    );
+
+    return res.status(200).json({
+        msg: "User updated successfully",
+        user: updatedUser
+    });
+
+});
+
+const deleteUser = asyncHandler(async (req, res) => {
+
+    const oldUser = await login.findOne({
+        userEmail: String(req.params.userEmail),
+        userId: req.user.id
+    });
+
+    if (!oldUser) {
+        return res.status(404).json({
+            msg: "User not found"
+        });
+    }
+
+    await oldUser.deleteOne();
+
+    return res.status(200).json({
+        msg: "User deleted successfully"
+    });
+
+});
+
+const allUser = asyncHandler(async (req, res) => {
+    const users = await login.find().select(
+        "userName userEmail role"
+    );
+
+    return res.status(200).json(users);
+});
 
 
-module.exports = {register,userLogin, forgotPassword};
+module.exports = {register,userLogin, forgotPassword,allUser,deleteUser,updateUser};

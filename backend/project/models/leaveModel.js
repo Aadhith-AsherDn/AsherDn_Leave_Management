@@ -10,7 +10,7 @@ const leaveSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    payedLeave: {
+    paidLeave: {
         type: Number,
         default: 0
     },
